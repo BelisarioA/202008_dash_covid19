@@ -100,14 +100,15 @@ tamanhoempresa=['não informado','2-10','11-50','51-200','201-500','501-1.000','
 estadocivil=['não quero declarar','solteira/o','casada/o','divorciada/o ou separada/o','viúva/o']
 
 #Dicionário de construtos (para a aba de correlações)
-dic_construtos={'suporte da empresa': ['suporte da empresa','reflete percepções individuais sobre o suporte que a organização fornece aos seus colaboradores.'],
-    'produtividade do time na<br>percepção do gestor': ['produtividade do time na percepção do gestor','reflete percepções do gestor sobre a produtividade de seus colaboradores diretos.'],
-    'bem estar': ['bem estar','um estado emocional positivo e prazeroso que resulta da avaliação que alguém faz sobre uma determinada experiência.'],
-    'engajamento': ['engajamento','sentimento de que existe conexão entre o colaborador e a organização e de que existe uma noção de pertencimento à cultura da organização.'],
-    'percepção de clareza na<br>comunicação da empresa': ['percepção de clareza na comunicação da empresa','se refere a percepção individual sobre a forma como a empresa se comunica com os colaboradores.'],
-    'concordância com as<br>medidas distanciamento': ['concordância com as medidas distanciamento','se refere a um senso de concordância em relação a medidas de distanciamento adotadas pelo governo.'],
-    'preocupação com a<br>pandemia': ['preocupação com a pandemia','se refere ao sentimento de risco em relação as consequências da pandemia para o trabalho, saúde e a saúde dos familiares de cada individuo.'],
-    'percepção de<br>produtividade individual':['percepção de produtividade individual','percepção de entrega dos mesmos resultados (quantidade e qualidade) comparado com antes da quarentena, considerando o mesmo recurso de tempo.']}
+dic_construtos={'interação com colegas': ['interação com colegas','reflete a eficiência da interação e da comunicação entre colegas de trabalho.'],
+                'interação com lider': ['interação com lider','reflete a eficiência da interação e da comunicação entre o indivíduo e a liderança direta.'],
+                'produtividade do time na<br>percepção do gestor': ['produtividade do time na percepção do gestor','reflete percepções do gestor sobre a produtividade de seus colaboradores diretos.'],
+                'segurança': ['segurança','indica o quanto o indivíduo se sente seguro e estável em seu trabalho.'],
+                'equilíbrio: vida pessoal e<br>vida profissional': ['equilíbrio: vida pessoal e vida profissional','percepção individual da habilidade de separar e estabelecer limites entre a vida pessoal e o trabalho.'],
+                'bem estar': ['bem estar','um estado emocional positivo e prazeroso que resulta da avaliação que alguém faz sobre uma determinada experiência.'],
+                'satisfação com<br>home office': ['satisfação com home office','reflete a satisfação individual com o trabalho remoto, tendo em vista seus pontos positivos e negativos.'],
+                'engajamento': ['engajamento','sentimento de que existe conexão entre o colaborador e a organização e de que existe uma noção de pertencimento à cultura da organização.'],
+                'percepção de<br>produtividade individual':['percepção de produtividade individual','percepção de entrega dos mesmos resultados (quantidade e qualidade) comparado com antes da quarentena, considerando o mesmo recurso de tempo.']}
 
 #Filtro Slider: Faixa etária 
 idadeslider={#1:{'label':'n.i.*','style': {'fontSize': '12px'}}, #-> obs: no caso, todos os respondentes informaram a idade
@@ -118,13 +119,13 @@ idadeslider={#1:{'label':'n.i.*','style': {'fontSize': '12px'}}, #-> obs: no cas
             5:{'label':'55','style': {'fontSize': '12px'}},
             6:{'label':'+55','style': {'fontSize': '12px'}}}
 #Filtro Slider: Tempo em home office
-tempohofslider={1:{'label':'não estou','style': {'fontSize': '12px'}},
-                2:{'label':'0 mês','style': {'fontSize': '12px'}},
-                3:{'label':'1 mês','style': {'fontSize': '12px'}},
-                4:{'label':'2 meses','style': {'fontSize': '12px'}},
-                5:{'label':'3 meses','style': {'fontSize': '12px'}},
-                6:{'label':'4 meses','style': {'fontSize': '12px'}},
-                7:{'label':'+4 meses','style': {'fontSize': '12px'}}}
+tempohofslider={1:{'label':'n.d.','style': {'fontSize': '12px'}},
+                2:{'label':'0','style': {'fontSize': '12px'}},
+                3:{'label':'1','style': {'fontSize': '12px'}},
+                4:{'label':'2','style': {'fontSize': '12px'}},
+                5:{'label':'3','style': {'fontSize': '12px'}},
+                6:{'label':'4','style': {'fontSize': '12px'}},
+                7:{'label':'+4','style': {'fontSize': '12px'}}}
 
 #   FUNÇÕES PARA CRIAÇÃO DOS GRÁFICOS DE BARRAS, COM FILTRO
 ## FUNÇÃO: CONSTRUÇÃO DAS TABELAS, CONSIDERANDO QUE SERÃO UTILIZADOS TODOS OS FILTROS PARA A CONSTRUÇÃO DOS GRÁFICOS
@@ -152,10 +153,10 @@ def gerar_tabela(db,coluna,niveis,fgenero,fidade,ffilhos,ftempohof):
 
 #FUNÇÃO: CRIAÇÃO DO GRÁFICO DE BARRAS A PARTIR DA TABELA GERADA POR OUTRA FUNÇÃO
 def grafico_barra_comparacao(tabela,titulo,rotulo='auto',n_respondentes=[]):
-    if rotulo != 'auto':
-        cor='#4d4d4d'
-    else: 
-        cor='white'
+    # if rotulo != 'auto':
+    #     cor='#4d4d4d'
+    # else: 
+    #     cor='white'
     fig = go.Figure(data=[go.Bar(
                 x=tabela['percentual total'],#['percentual total'], -> se é colocado o percentual total, o hover fica melhor, mas as barras ficam em escalas diferentes
                 y=tabela.index,
@@ -163,7 +164,7 @@ def grafico_barra_comparacao(tabela,titulo,rotulo='auto',n_respondentes=[]):
                 text=tabela['percentual total'].apply(lambda x: "{0:.1f}%".format(x*100)), #tabela['percentual total'].values,
                 textposition=rotulo,
                 orientation='h',
-                textfont={'color':cor},
+                # textfont={'color':cor},
                 hoverinfo='skip'), #hovertemplate='%{x:.1%}', hoverinfo='all'),
                          go.Bar(
                 x=tabela['percentual filtrado'],
@@ -172,7 +173,7 @@ def grafico_barra_comparacao(tabela,titulo,rotulo='auto',n_respondentes=[]):
                 text=tabela['percentual filtrado'].apply(lambda x: "{0:.1f}%".format(x*100)), #tabela['percentual filtrado'].values,
                 textposition=rotulo,
                 orientation='h',
-                textfont={'color':cor},
+                # textfont={'color':cor},
                 hoverinfo='skip')])
 
     if n_respondentes==[]:
@@ -222,7 +223,9 @@ app = dash.Dash(__name__, external_stylesheets = [dbc.themes.YETI], suppress_cal
 server = app.server
 # Variáveis: filtro e conteúdo das abas
 # Filtro para todas as abas
-filtros = html.Div(children=[
+filtros = html.Div([
+    #Filtros
+    html.Div(children=[
     # Título
         html.Div(
             children=[
@@ -281,7 +284,7 @@ filtros = html.Div(children=[
                     pushable=1
                 ) ,
             ],className='filtro-geral'),
-            # html.P(children='*n.i.: não informado', className='asterisco-ni')
+            # html.P(children='*n.a.: não informado', className='asterisco-ni')
         ],className='filtro-mais-titulo',
         ),
 
@@ -316,7 +319,7 @@ filtros = html.Div(children=[
         html.Div([
             html.Div([
                 html.P(
-                children='tempo em home office',
+                children='tempo em home office (em meses)',
                 style = dict(textAlign = 'center')
                 )
             ],className='titulo-filtro'),
@@ -331,7 +334,7 @@ filtros = html.Div(children=[
                     vertical=False,
                     pushable=1
                 ),
-                # html.P(children='*n.i.: não informado', className='asterisco-ni')
+                html.P(children='*n.d.: não estão de home office', className='asterisco-ni')
             ],className='filtro-geral'),
         ],className='filtro-mais-titulo',
         ),
@@ -377,7 +380,21 @@ filtros = html.Div(children=[
         html.Div([html.Pre(id='container')], style={'width':'30%', 'float':'right'}),
     ], 
     className='conjunto-filtro',
-    )
+    ),
+    # Botão para ver os resultados da primeira fase da pesquisa
+    html.Div([
+        dbc.Button(children=['clique aqui para rever os resultados da primeira fase da pesquisa'],
+            id='botao_pesquisa',
+            className='botao-pesquisa',
+            color= 'primary',
+            outline=False,
+            block=True,
+            href='https://numera-covid.herokuapp.com/',
+            target='_blank'
+        )
+    ],className='botao-pesquisa1'
+    ),
+],className='lateral')
 
 # CONTAINER PARA VER O Slider
 @app.callback(
@@ -462,7 +479,7 @@ tab1_content = html.Div(children=[
                 ),
                 dcc.Graph(id='idade')
             ],
-            className='idade graficos',
+            className='idade graficos',#,style=dict(display='flex-direction', alignItem='center'),
             ),
         #Terceira linha de gráficos
         # Gráfico2: tempo em home office
@@ -505,7 +522,7 @@ tab2_content = html.Div(children=[
                 html.Div(
                     children=[
                         html.H5(children=[
-                        'sentimento dos respondentes quanto aos aspectos relacionados ao trabalho']),
+                        'sentimento dos respondentes quanto aos aspectos relacionados ao trabalho em meio a pandemia']),
                         html.H6(children= 
                         'percepção de produtividade, engajamento e satisfação com trabalho remoto foram avaliados por meio de perguntas indiretas'),
                         ]
@@ -527,13 +544,15 @@ tab2_content = html.Div(children=[
                 ),
                 html.Div([
                     html.P(children=['satisfação dos respondentes com relação ao trabalho remoto',
-                    # html.Br([]),
-                    html.Sub(['aplicado apenas às pessoas que estão integral ou parcialmente em home office'])]),
+                        html.Br([]),
+                        html.Span(['aplicado apenas às pessoas que estão integral ou parcialmente em home office'],style=dict(fontSize='10px'))]),
                     dcc.Graph(id='satisfacaoLikert'),
                 ],className='satisf-likert graficos',
                 ),
                 html.Div([
-                    html.P(['médias dos respondentes para cada esfera abordada na pesquisa'],
+                    html.P(['médias dos respondentes para cada esfera abordada na pesquisa',
+                        html.Br([]),
+                        html.Span(['definições apresentadas na aba "correlações"'],style=dict(fontSize='10px'))]
                     ),
                     dcc.Graph(id='mediasLikert'),
                 ],className='medias-likert graficos',
@@ -622,7 +641,7 @@ tab5_content = html.Div(children=[
                         html.Div([
                             dcc.Graph(
                                 id='correlacao',
-                                clickData={'points':[{'x':'bem estar','y':'suporte da empresa'}]},
+                                clickData={'points':[{'x':'engajamento','y':'percepção de<br>produtividade individual'}]},
                             ),]),
                         html.Div([
                             html.A(children=html.P(['sugestão de leitura:',html.Br(),'aprofundamento em gráficos de correlação']),#,html.Br(),' \"Uma ferramenta simples para direcionar',html.Br(),'e fortalecer suas análises\"']),
@@ -654,7 +673,7 @@ tab5_content = html.Div(children=[
                 html.Div([
                     dcc.Graph(
                         id='dispersao',
-                        clickData={'points':[{'x':'bem estar','y':'suporte da empresa'}]}
+                        clickData={'points':[{'x':'engajamento','y':'percepção de<br>produtividade individual'}]}
                     ),
                 ],
                 className='dispersao'
@@ -674,7 +693,7 @@ capa = html.Div([
     # Imagem da capa está colocada no css
     html.Div([
         html.Div(children=[
-            html.H4(['pesquisa COVID-19 - segunda fase']),
+            html.H4(['PESQUISA* COVID-19 - SEGUNDA FASE']),
             html.P(['mudanças no trabalho em época de distanciamento social']),
         ]),
         html.Br(),
@@ -684,6 +703,8 @@ capa = html.Div([
             href='/covid19-fase2',
             className='botao-conteudo',
             ),
+        html.Div(children=[
+            html.H6(['*pesquisa desenvolvida pela numera com apoio da especialista em psicometria Ana Crispim'])])
     ],className='ir-conteudo'
     ),
 ])
@@ -701,8 +722,20 @@ conteudo = html.Div([
                 )],className='logo'),
             html.Div([
                 dbc.NavbarBrand(children=
-                [html.H3(['PESQUISA COVID-19'],className='texto-titulo-navbar')])
+                [html.H3(['PESQUISA COVID-19 | FASE 2'],className='texto-titulo-navbar')])
                 ],className='titulo-navbar'),
+            # html.Div([
+            #     dbc.Button(children=['clique aqui para rever os resultados da primeira fase da pesquisa'],
+            #         id='botao_pesquisa',
+            #         className='botao-pesquisa',
+            #         color= 'primary',
+            #         outline=False,
+            #         block=True,
+            #         href='https://numera-covid.herokuapp.com/',
+            #         target='_blank'
+            #     )
+            # ],className='botao-pesquisa1'
+            # ),
             ],className='navbar'
         ),
     # Informações
@@ -714,20 +747,6 @@ conteudo = html.Div([
             
         #Layout com abas
             html.Div([
-            #Botão para redirecionar para a fase 2 da pesquisa
-                # html.Div([
-                #     dbc.Button(
-                #         children=['clique aqui e participe da segunda fase da pesquisa!'],
-                #         id='botao_pesquisa',
-                #         className='botao-pesquisa',
-                #         color= 'primary',
-                #         outline=False,
-                #         block=True,
-                #         href='https://www.surveygizmo.com/s3/5685518/Mudancas-epoca-covid-2',
-                #         target='_blank'
-                #     )
-                # ],className='botao-pesquisa1'
-                # ),
             #Abas
                 dcc.Tabs(id='tabs-geral',#value='tab0',
                 children=[
@@ -737,7 +756,7 @@ conteudo = html.Div([
                     className='custom-tab'
                     ),
             #Segunda Tab: tab1
-                    dcc.Tab(label='produtividade e engajamento',id='tab1',
+                    dcc.Tab(label='relações com trabalho na pandemia',id='tab1',
                     children = [tab2_content],
                     className='custom-tab'
                     ),
@@ -747,7 +766,7 @@ conteudo = html.Div([
                     className='custom-tab'
                     ),
             #Quarta Tab: tab3
-                    dcc.Tab(label='satisfação com home office',id='tab3',
+                    dcc.Tab(label='satisfação com trabalho remoto',id='tab3',
                     children = [tab4_content],
                     className='custom-tab'
                     ),
@@ -1098,9 +1117,9 @@ def upgrade_grafico_mediaslikert(fgenero,fidade,ffilhos,ftempohof):
     tabela_construtos['percentual filtrado']=(tabela_construtos['média filtrado']-1)/(5-1)
 
     tabela_construtos.index=lista_construtos
-    tabela_construtos
+    tabela_construtos1=tabela_construtos.sort_values(by='percentual total', ascending = True)
     titulo='construtos'
-    grafico=grafico_barra_comparacao(tabela_construtos,titulo,rotulo='auto',n_respondentes=[db.shape[0],db_f1.shape[0]])
+    grafico=grafico_barra_comparacao(tabela_construtos1,titulo,rotulo='auto',n_respondentes=[db.shape[0],db_f1.shape[0]])
     return grafico
 
 ### TERCEIRA ABA
@@ -1325,7 +1344,7 @@ def update_grafico_correlacao(fgenero,fidade,ffilhos,ftempohof):
     #Construção da matriz de correlações
     db_var1=db_filtro.loc[:,['media_interacao_colegas', 'media_interacao_lider', 'media_prod_gestor', 'media_seguranca', 'media_wlbalance', 
                             'media_bem_estar', 'media_satisfacao', 'media_engajamento', 'media_produtividade']]
-    var_names=['interação com colegas', 'interação com lider', 'produtividade do time na<br>percepção do gestor', 'segurança', 'work life balance', 
+    var_names=['interação com colegas', 'interação com lider', 'produtividade do time na<br>percepção do gestor', 'segurança', 'equilíbrio: vida pessoal e<br>vida profissional', 
                 'bem estar','satisfação com<br>home office', 'engajamento', 'percepção de<br>produtividade individual']
     db_var1.columns = var_names
 
@@ -1397,7 +1416,7 @@ def update_grafico_dispersao(fgenero,fidade,ffilhos,ftempohof,corhover):
     #Construção da matriz de correlações
     db_var1=db_filtro.loc[:,['media_interacao_colegas', 'media_interacao_lider', 'media_prod_gestor', 'media_seguranca', 'media_wlbalance', 
                             'media_bem_estar', 'media_satisfacao', 'media_engajamento', 'media_produtividade']]
-    var_names=['interação com colegas', 'interação com lider', 'produtividade do time na<br>percepção do gestor', 'segurança', 'work life balance', 
+    var_names=['interação com colegas', 'interação com lider', 'produtividade do time na<br>percepção do gestor', 'segurança', 'equilíbrio: vida pessoal e<br>vida profissional', 
                 'bem estar','satisfação com<br>home office', 'engajamento', 'percepção de<br>produtividade individual']
     db_var1.columns = var_names
 
