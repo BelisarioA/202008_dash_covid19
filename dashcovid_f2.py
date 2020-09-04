@@ -693,8 +693,12 @@ capa = html.Div([
     # Imagem da capa está colocada no css
     html.Div([
         html.Div(children=[
-            html.H4(['PESQUISA* COVID-19 - SEGUNDA FASE']),
-            html.P(['mudanças no trabalho em época de distanciamento social']),
+            html.H4(['Pesquisa COVID-19',html.Br()]),
+            html.Br(),
+            html.H5('SEGUNDA FASE'),
+            html.Br(),
+            html.Br(),
+            html.P(['MUDANÇAS NO TRABALHO EM ÉPOCA',html.Br(),'DE DISTANCIAMENTO SOCIAL']),
         ]),
         html.Br(),
         html.Br(),
@@ -703,8 +707,8 @@ capa = html.Div([
             href='/covid19-fase2',
             className='botao-conteudo',
             ),
-        html.Div(children=[
-            html.H6(['*pesquisa desenvolvida pela numera com apoio da especialista em psicometria Ana Crispim'])])
+        # html.Div(children=[
+        #     html.H6(['*pesquisa desenvolvida pela numera com apoio da especialista em psicometria Ana Crispim'])])
     ],className='ir-conteudo'
     ),
 ])

@@ -25,24 +25,39 @@
     color: #fff;
     /* color: #4d4d4d; */
 }
-.ir-conteudo p{
-    font-size: 24px;
-    font-weight: 500;
-    color: #fff;
-    opacity: 0.95; 
-    margin-bottom: 30px;
-}
 .ir-conteudo h4{
-    font-size: 28px;
+    font-size: 50px;
+    font-weight: 400;
+    color: #fff;
+    opacity: 0.95; 
+    letter-spacing: 3px;
+    font-family: Georgia;
+    margin-top: 250px;
+    /* border: #fff solid 1px; */
+}
+.ir-conteudo h5{
+    font-size: 27px;
     font-weight: 500;
     color: #fff;
     opacity: 0.95; 
+    letter-spacing: 3px;
+    font-family: Georgia;
+}
+.ir-conteudo p{
+    font-size: 20px;
+    font-weight: 150;
+    color: #fff;
+    opacity: 0.5; 
+    margin-bottom: 30px;
+    letter-spacing: 6px;
+    font-family: sans-serif;
+    
 }
 .ir-conteudo h6{
     font-size: 18;
     margin-top: 150px;
     color: #fff;
-    opacity: 0.95; 
+    opacity: 0.7; 
     /* border: #4d4d4d 1px solid; */
 }
 .botao-conteudo{
